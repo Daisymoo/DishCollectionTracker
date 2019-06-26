@@ -1,0 +1,409 @@
+#!/usr/bin/bash
+#Dish Collection Tracker program
+#user starts program, menu appears
+#user selects menu item
+#user can add, view, or delete items from person collection
+#user can view entire collection of dishes produced for a line
+
+#function definitions
+#checkFile functions check to ensure file exists before opening
+checkFile ()
+{
+	[ -f fiestaDishes.txt ] && readFile || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
+}
+
+checkWantedFiesta ()
+{
+	[ -f wantedFiesta.txt ] && readFileWantFiesta || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
+}
+
+checkOwnedFiesta ()
+{
+	[ -f ownedFiesta.txt ] && readFile || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
+}
+
+#readFile functions to read .txt file
+readFile ()
+{
+  dialog --textbox fiestaDishes.txt 20 80
+}
+
+readFileWantFiesta ()
+{
+  dialog --textbox wantedFiesta.txt 20 80
+}
+
+readFileOwnFiesta ()
+{
+  dialog --textbox ownedFiesta.txt 20 80
+}
+
+#!/usr/bin/bash
+#Dish Collection Tracker program
+#user starts program, menu appears
+#user selects menu item from while-menu-dialog
+#user can add, view, or delete items from person collection
+#user can view entire collection of dishes produced for a line
+
+#function definitions
+#checkFile functions check to ensure file exists before opening
+#Fiesta functions
+checkFileFiesta ()
+{
+	[ -f fiestaDishes.txt ] && readFileFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkWantedFiesta ()
+{
+	[ -f wantedFiesta.txt ] && readFileWantFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkOwnedFiesta ()
+{
+	[ -f ownedFiesta.txt ] && readFileOwnFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+#Pyrex checkFile functions
+checkFilePyrex ()
+{
+	[ -f pyrexDishes.txt ] && readFilePyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkWantedPyrex ()
+{
+	[ -f wantedPyrex.txt ] && readFileWantPyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkOwnedPyrex ()
+{
+	[ -f ownedPyrex.txt ] && readFileOwnPyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+#Hazel Atlas checkFile functions
+checkFileHA ()
+{
+	[ -f haDishes.txt ] && readFileHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkWantedHA ()
+{
+	[ -f wantedHA.txt ] && readFileWantHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+checkOwnedHA ()
+{
+	[ -f ownedHA.txt ] && readFileOwnHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
+}
+
+#readFile functions to read .txt file
+#Fiesta readFile functions
+readFileFiesta ()
+{
+  dialog --textbox fiestaDishes.txt 20 80
+}
+
+readFileWantFiesta ()
+{
+  dialog --textbox wantedFiesta.txt 20 80
+}
+
+readFileOwnFiesta ()
+{
+  dialog --textbox ownedFiesta.txt 20 80
+}
+
+#Pyrex readFile functions
+readFilePyrex ()
+{
+  dialog --textbox pyrexOwnedDishes.txt 20 80
+}
+
+readFileWantPyrex ()
+{
+  dialog --textbox wantedPyrex.txt 20 80
+}
+
+readFileOwnPyrex ()
+{
+  dialog --textbox ownedPyrex.txt 20 80
+}
+
+#Hazel Atlas readFile functions
+readFileHA ()
+{
+  dialog --textbox haDishes.txt 20 80
+}
+
+readFileWantHA ()
+{
+  dialog --textbox wantedHA.txt 20 80
+}
+
+readFileOwnHA ()
+{
+  dialog --textbox ownedHA.txt 20 80
+}
+
+#while-menu-dialog
+DIALOG_CANCEL=1
+DIALOG_ESC=255
+HEIGHT=0
+WIDTH=0
+
+display_result() {
+  dialog --title "$1" \
+    --no-collapse \
+    --msgbox "$result" 0 0
+}
+
+while true; do
+  exec 3>&1
+  selection=$(dialog \
+    --backtitle "Dish Collection Tracker Program" \
+    --title "Start by selecting dish brand." \
+    --clear \
+	--ok-label " Go " \
+    --cancel-label " Close " \
+    --menu "\nChoose from:" $HEIGHT $WIDTH 4 \
+    "1" "Fiestaware" \
+    "2" "Pyrex" \
+    "3" "Hazel Atlas" \
+    2>&1 1>&3)
+  exit_status=$?
+  exec 3>&-
+  case $exit_status in
+    $DIALOG_CANCEL)
+      clear
+      dialog --colors --infobox "\Zb\Zu\Z4Exiting Dish Collection Tracker." 10 50 ; sleep 2
+      exit
+      ;;
+    $DIALOG_ESC)
+      clear
+      dialog --colors --infobox "\Zr\Z1Error: Program aborted!" 5 30 ; sleep 2
+      exit 1
+      ;;
+  esac
+  case $selection in
+    0 )
+      clear
+      dialog --colors --infobox "\Zb\Z4Exiting Dish Collection Tracker." 10 50 ; sleep 2
+      ;;
+    1 )	#primary menu
+		HEIGHT=15
+		WIDTH=60
+		CHOICE_HEIGHT=8
+		BACKTITLE="Dish Collection Tracker"
+		TITLE="Vintage Fiestaware Dishes"
+		MENU="Choose from the following options:"
+
+		OPTIONS=(1 "See all vintage Fiestaware dishes."
+				 2 "See Fiestaware dishes you own."
+				 3 "See Fiestaware dishes you want."
+				 4 "Add or remove Fiestaware dishes you own."
+				 5 "Add or remove Fiestaware dishes you want."
+				 6 "Exit.")
+
+		CHOICE=$(dialog --clear \
+						--backtitle "$BACKTITLE" \
+						--title "$TITLE" \
+						--menu "$MENU" \
+						$HEIGHT $WIDTH $CHOICE_HEIGHT \
+						"${OPTIONS[@]}" \
+						2>&1 >/dev/tty)
+
+		clear
+		case $CHOICE in
+			#loop brand submenu until user exits.
+				1) #See all Fiestaware dishes made.
+					dialog --colors --infobox "\Zb\Zr\Z5You chose see all Fiestaware dishes." 5 50 ; sleep 2
+					checkFileFiesta;;
+				2) #See owned dishes.
+					dialog --infobox "Here are your Fiestaware dishes:" 5 50 ; sleep 2
+					checkOwnedFiesta;;
+				3) #Wanted dishes options.
+					dialog --infobox "Here are the Fiestaware dishes you want:" 5 50 ; sleep 2
+					checkWantedFiesta;;
+				4) #Owned dishes options.			
+				 	HEIGHT=15
+					WIDTH=60
+					CHOICE_HEIGHT=8
+					BACKTITLE="Vintage Fiestaware"
+					TITLE="Owned Fiestaware Dishes"
+					MENU="Choose what to do with Wanted Fiestaware Dishes:"
+					OPTIONS=(1 "Add dish to wanted Fiestaware list."
+							2 "Remove dish from wanted Fiestaware list."
+							3 "Exit this menu.")
+							
+						CHOICE=$(dialog --clear \
+						--backtitle "$BACKTITLE" \
+						--title "$TITLE" \
+						--menu "$MENU" \
+						$HEIGHT $WIDTH $CHOICE_HEIGHT \
+						"${OPTIONS[@]}" \
+						2>&1 >/dev/tty)
+
+					clear
+					case $CHOICE in
+						#loop owned submenu until user exits.
+							1) #Add dish
+								dialog --title "Owned Fiestaware" --msgbox "Adding dish." 10 10 ; sleep 2
+									#add dish to owned Fiestaware
+									dialog --backtitle "Add dish to Owned Fiestaware dish list." \
+									--ok-label " Next " \
+									--radiolist "Select type of dish:" 12 40 4 \
+										1 "Plate" off \
+										2 "Ash Tray" off \
+										3 "Bowl" off \
+										4 "Mug" off
+										clear;;
+							2) #Remove dish
+								dialog --title "Owned Fiestaware" --msgbox "Removing dish." 10 10 ; sleep 2
+								clear;;
+							3) #Exit menu
+								dialog --title "Owned Fiestaware" --msgbox "Exiting Owned Fiestaware now." 10 60 ; sleep 2
+							esac;;
+				5) #Wanted dishes options.			
+				 	HEIGHT=15
+					WIDTH=60
+					CHOICE_HEIGHT=8
+					BACKTITLE="Vintage Fiestaware"
+					TITLE="Wanted Fiestaware Dishes"
+					MENU="Choose what to do with Wanted Fiestaware Dishes:"
+					OPTIONS=(1 "Add dish to wanted Fiestaware list."
+							2 "Remove dish from wanted Fiestaware list."
+							3 "Exit this menu.")
+							
+						CHOICE=$(dialog --clear \
+						--backtitle "$BACKTITLE" \
+						--title "$TITLE" \
+						--menu "$MENU" \
+						$HEIGHT $WIDTH $CHOICE_HEIGHT \
+						"${OPTIONS[@]}" \
+						2>&1 >/dev/tty)
+
+					clear
+					case $CHOICE in
+						#loop wanted submenu until user exits.
+							1) #Add dish
+								dialog --title "Wanted Fiestaware" --msgbox "Adding dish." 10 20 ; sleep 2
+									#add dish to wanted Fiestaware
+									dialog --backtitle "Add dish to Wanted Fiestaware dish list." \
+									--ok-label " Next " \
+									--radiolist "Select type of dish:" 12 40 4 \
+										1 "Plate" off \
+										2 "Ash Tray" off \
+										3 "Bowl" off \
+										4 "Mug" off
+										clear;;
+							2) #Remove dish
+								dialog --title "Wanted Fiestaware" --msgbox "Removing dish." 10 40 ; sleep 2
+								readFileWantFiesta;;
+							3) #Exit menu
+								dialog --title "Wanted Fiestaware" --msgbox "Exiting Wanted Fiestaware now." 10 60 ; sleep 2
+							esac;;
+
+				6)  #exits from menu
+					dialog --title "Exit Dish Collection Tracker" --msgbox "Exiting Fiestaware menu now." 10 60
+				esac;;
+				
+    2 )#primary menu for Pyrex
+		HEIGHT=15
+		WIDTH=60
+		CHOICE_HEIGHT=8
+		BACKTITLE="Dish Collection Tracker"
+		TITLE="Vintage Milkglass Pyrex Dishes"
+		MENU="Choose from the following options:"
+
+		OPTIONS=(1 "See all vintage milkglass Pyrex dishes made."
+				 2 "See all Pyrex dishes you own."
+				 3 "See all Pyrex dishes you want."
+				 4 "Add Pyrex dishes you own."
+				 5 "Add Pyrex dishes you want."
+				 6 "Exit.")
+
+		CHOICE=$(dialog --clear \
+						--backtitle "$BACKTITLE" \
+						--title "$TITLE" \
+						--menu "$MENU" \
+						$HEIGHT $WIDTH $CHOICE_HEIGHT \
+						"${OPTIONS[@]}" \
+						2>&1 >/dev/tty)
+
+		clear
+		case $CHOICE in
+			#loop brand submenu until user exits.
+				1) #See all Pyrex dishes.
+					dialog --infobox "You chose see all Pyrex dishes." 5 50 ; sleep 2
+					checkFilePyrex;;
+				2) #See owned dishes.
+					dialog --infobox "Here are your Pyrex dishes:" 5 50 ; sleep 2
+					checkOwnedPyrex;;
+				3) #See wanted dishes.
+					dialog --infobox "Here are the Pyrex dishes you want:" 5 50 ; sleep 2
+					checkWantedPyrex;;
+				4) #Add owned dishes.
+					echo "What type of Pyrex dish do you want to add to Owned Dishes?"
+					break;;
+				5) echo "What type of Pyrex dish do you want to add to Wanted Dishes?"
+					break;;
+				6) echo "Exiting now!"
+					break;;
+				   #Due to use of dialog menu, reduce invalid input
+				*) #invalid input causes menu to repeat
+					echo "Re-select what you want to do."
+					echo
+					break;;
+				esac;;
+
+    3 )#primary menu for Hazel Atlas
+		HEIGHT=15
+		WIDTH=60
+		CHOICE_HEIGHT=8
+		BACKTITLE="Dish Collection Tracker"
+		TITLE="Vintage Hazel Atlas Dishes"
+		MENU="Choose from the following options:"
+
+		OPTIONS=(1 "See all vintage Hazel Atlas dishes made."
+				 2 "See all Hazel Atlas dishes you own."
+				 3 "See all Hazel Atlas dishes you want."
+				 4 "Add Hazel Atlas dishes you own."
+				 5 "Add Hazel Atlas dishes you want."
+				 6 "Exit.")
+
+		CHOICE=$(dialog --clear \
+						--backtitle "$BACKTITLE" \
+						--title "$TITLE" \
+						--menu "$MENU" \
+						$HEIGHT $WIDTH $CHOICE_HEIGHT \
+						"${OPTIONS[@]}" \
+						2>&1 >/dev/tty)
+
+		clear
+		case $CHOICE in
+			#loop brand submenu until user exits.
+				1) #See all Hazel Atlas dishes.
+					dialog --infobox "You chose see all Hazel Atlas dishes." 5 50 ; sleep 2
+					checkFileHA;;
+				2) #See owned dishes.
+					dialog --infobox "Here are your Hazel Atlas dishes:" 5 50 ; sleep 2
+					checkOwnedHA;;
+				3) #See wanted dishes.
+					dialog --infobox "Here are the Hazel Atlas dishes you want:" 5 50 ; sleep 2
+					checkWantedHA;;
+				4) #Add owned dishes.
+					echo "What type of Hazel Atlas dish do you want to add to Owned Dishes?"
+					break;;
+				5) echo "What type of Hazel Atlas dish do you want to add to Wanted Dishes?"
+					break;;
+				6) echo "Exiting now!"
+					break;;
+				   #Due to use of dialog menu, reduce invalid input
+				*) #invalid input causes menu to repeat
+					echo "Re-select what you want to do."
+					echo
+					break;;
+				esac
+				esac
+			done
+		exit 0
+			
