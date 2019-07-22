@@ -1,409 +1,788 @@
 #!/usr/bin/bash
-#Dish Collection Tracker program
-#user starts program, menu appears
-#user selects menu item
-#user can add, view, or delete items from person collection
-#user can view entire collection of dishes produced for a line
-
-#function definitions
-#checkFile functions check to ensure file exists before opening
-checkFile ()
-{
-	[ -f fiestaDishes.txt ] && readFile || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
-}
-
-checkWantedFiesta ()
-{
-	[ -f wantedFiesta.txt ] && readFileWantFiesta || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
-}
-
-checkOwnedFiesta ()
-{
-	[ -f ownedFiesta.txt ] && readFile || dialog --infobox "File not found. Exiting program." 5 20 ; sleep 4
-}
-
-#readFile functions to read .txt file
-readFile ()
-{
-  dialog --textbox fiestaDishes.txt 20 80
-}
-
-readFileWantFiesta ()
-{
-  dialog --textbox wantedFiesta.txt 20 80
-}
-
-readFileOwnFiesta ()
-{
-  dialog --textbox ownedFiesta.txt 20 80
-}
-
-#!/usr/bin/bash
+#Jessica Kovarik
 #Dish Collection Tracker program
 #user starts program, menu appears
 #user selects menu item from while-menu-dialog
 #user can add, view, or delete items from person collection
 #user can view entire collection of dishes produced for a line
 
-#function definitions
+#function definitions using yad for GUI
 #checkFile functions check to ensure file exists before opening
-#Fiesta functions
-checkFileFiesta ()
-{
-	[ -f fiestaDishes.txt ] && readFileFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkWantedFiesta ()
-{
-	[ -f wantedFiesta.txt ] && readFileWantFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkOwnedFiesta ()
-{
-	[ -f ownedFiesta.txt ] && readFileOwnFiesta || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-#Pyrex checkFile functions
-checkFilePyrex ()
-{
-	[ -f pyrexDishes.txt ] && readFilePyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkWantedPyrex ()
-{
-	[ -f wantedPyrex.txt ] && readFileWantPyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkOwnedPyrex ()
-{
-	[ -f ownedPyrex.txt ] && readFileOwnPyrex || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-#Hazel Atlas checkFile functions
-checkFileHA ()
-{
-	[ -f haDishes.txt ] && readFileHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkWantedHA ()
-{
-	[ -f wantedHA.txt ] && readFileWantHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
-
-checkOwnedHA ()
-{
-	[ -f ownedHA.txt ] && readFileOwnHA || dialog --infobox "File not found. Going back to menu." 5 20 ; sleep 4
-}
 
 #readFile functions to read .txt file
 #Fiesta readFile functions
 readFileFiesta ()
 {
-  dialog --textbox fiestaDishes.txt 20 80
+  yad --width=800 --height=800 --text "Here are all the vintage Fiestaware dishes made." --text-info \ --button= --button=gtk-ok:1 < fiestaDishes.txt
 }
 
 readFileWantFiesta ()
 {
-  dialog --textbox wantedFiesta.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Fiestaware dishes you want." --text-info \ --button= --button=gtk-ok:1 < wantedFiesta.txt
 }
 
 readFileOwnFiesta ()
 {
-  dialog --textbox ownedFiesta.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Fiestaware dishes you own." --text-info \ --button= --button=gtk-ok:1 < ownedFiesta.txt
 }
 
 #Pyrex readFile functions
 readFilePyrex ()
 {
-  dialog --textbox pyrexOwnedDishes.txt 20 80
+  yad --width=800 --height=800 --text "Here are all the vintage milkglass Pyrex dishes made." --text-info \ --button= --button=gtk-ok:1 < pyrexOwnedDishes.txt
 }
 
 readFileWantPyrex ()
 {
-  dialog --textbox wantedPyrex.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Pyrex dishes you want." --text-info \ --button= --button=gtk-ok:1 < wantedPyrex.txt
 }
 
 readFileOwnPyrex ()
 {
-  dialog --textbox ownedPyrex.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Pyrex dishes you own." --text-info \ --button= --button=gtk-ok:1 < ownedPyrex.txt
 }
 
 #Hazel Atlas readFile functions
 readFileHA ()
 {
-  dialog --textbox haDishes.txt 20 80
+  yad --width=800 --height=800 --text "Here are all the vintage Hazel Atlas dishes made." --text-info \ --button= --button=gtk-ok:1 < haDishes.txt
 }
 
 readFileWantHA ()
 {
-  dialog --textbox wantedHA.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Hazel Atlas dishes you want." --text-info \ --button= --button=gtk-ok:1 < wantedHA.txt
 }
 
 readFileOwnHA ()
 {
-  dialog --textbox ownedHA.txt 20 80
+  yad --width=800 --height=800 --text "Here are the Hazel Atlas dishes you want." --text-info \ --button= --button=gtk-ok:1 < ownedHA.txt
 }
 
-#while-menu-dialog
-DIALOG_CANCEL=1
-DIALOG_ESC=255
-HEIGHT=0
-WIDTH=0
-
-display_result() {
-  dialog --title "$1" \
-    --no-collapse \
-    --msgbox "$result" 0 0
+#Fiesta functions
+checkFileFiesta ()
+{
+	[ -f fiestaDishes.txt ] && readFileFiesta || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
 }
 
+checkWantedFiesta ()
+{
+	[ -f wantedFiesta.txt ] && readFileWantFiesta || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+checkOwnedFiesta ()
+{
+	[ -f ownedFiesta.txt ] && readFileOwnFiesta || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+#Pyrex checkFile functions
+checkFilePyrex ()
+{
+	[ -f pyrexDishes.txt ] && readFilePyrex || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+checkWantedPyrex ()
+{
+	[ -f wantedPyrex.txt ] && readFileWantPyrex || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+checkOwnedPyrex ()
+{
+	[ -f ownedPyrex.txt ] && readFileOwnPyrex || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+#Hazel Atlas checkFile functions
+checkFileHA ()
+{
+	[ -f haDishes.txt ] && readFileHA || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+checkWantedHA ()
+{
+	[ -f wantedHA.txt ] && readFileWantHA || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+checkOwnedHA ()
+{
+	[ -f ownedHA.txt ] && readFileOwnHA || yad --text "File not found. Going back to menu." \ --button= --button=gtk-ok:1
+}
+
+#menus
+#while menu using yad for primary menu
 while true; do
-  exec 3>&1
-  selection=$(dialog \
-    --backtitle "Dish Collection Tracker Program" \
-    --title "Start by selecting dish brand." \
-    --clear \
-	--ok-label " Go " \
-    --cancel-label " Close " \
-    --menu "\nChoose from:" $HEIGHT $WIDTH 4 \
-    "1" "Fiestaware" \
-    "2" "Pyrex" \
-    "3" "Hazel Atlas" \
-    2>&1 1>&3)
-  exit_status=$?
-  exec 3>&-
-  case $exit_status in
-    $DIALOG_CANCEL)
-      clear
-      dialog --colors --infobox "\Zb\Zu\Z4Exiting Dish Collection Tracker." 10 50 ; sleep 2
-      exit
-      ;;
-    $DIALOG_ESC)
-      clear
-      dialog --colors --infobox "\Zr\Z1Error: Program aborted!" 5 30 ; sleep 2
-      exit 1
-      ;;
-  esac
-  case $selection in
-    0 )
-      clear
-      dialog --colors --infobox "\Zb\Z4Exiting Dish Collection Tracker." 10 50 ; sleep 2
-      ;;
-    1 )	#primary menu
-		HEIGHT=15
-		WIDTH=60
-		CHOICE_HEIGHT=8
-		BACKTITLE="Dish Collection Tracker"
-		TITLE="Vintage Fiestaware Dishes"
-		MENU="Choose from the following options:"
 
-		OPTIONS=(1 "See all vintage Fiestaware dishes."
-				 2 "See Fiestaware dishes you own."
-				 3 "See Fiestaware dishes you want."
-				 4 "Add or remove Fiestaware dishes you own."
-				 5 "Add or remove Fiestaware dishes you want."
-				 6 "Exit.")
+#yad menu using --text and creating buttons
+yad --width=350 --text="Welcome to Dish Collection Tracker!
 
-		CHOICE=$(dialog --clear \
-						--backtitle "$BACKTITLE" \
-						--title "$TITLE" \
-						--menu "$MENU" \
-						$HEIGHT $WIDTH $CHOICE_HEIGHT \
-						"${OPTIONS[@]}" \
-						2>&1 >/dev/tty)
+Select what brand of dishes to explore:" \
+--button=gtk-cancel:1 \
+--button="Fiestaware":2 \
+--button="Pyrex":3 \
+--button="Hazel Atlas":4 \
 
-		clear
-		case $CHOICE in
-			#loop brand submenu until user exits.
-				1) #See all Fiestaware dishes made.
-					dialog --colors --infobox "\Zb\Zr\Z5You chose see all Fiestaware dishes." 5 50 ; sleep 2
-					checkFileFiesta;;
-				2) #See owned dishes.
-					dialog --infobox "Here are your Fiestaware dishes:" 5 50 ; sleep 2
-					checkOwnedFiesta;;
-				3) #Wanted dishes options.
-					dialog --infobox "Here are the Fiestaware dishes you want:" 5 50 ; sleep 2
-					checkWantedFiesta;;
-				4) #Owned dishes options.			
-				 	HEIGHT=15
-					WIDTH=60
-					CHOICE_HEIGHT=8
-					BACKTITLE="Vintage Fiestaware"
-					TITLE="Owned Fiestaware Dishes"
-					MENU="Choose what to do with Wanted Fiestaware Dishes:"
-					OPTIONS=(1 "Add dish to wanted Fiestaware list."
-							2 "Remove dish from wanted Fiestaware list."
-							3 "Exit this menu.")
-							
-						CHOICE=$(dialog --clear \
-						--backtitle "$BACKTITLE" \
-						--title "$TITLE" \
-						--menu "$MENU" \
-						$HEIGHT $WIDTH $CHOICE_HEIGHT \
-						"${OPTIONS[@]}" \
-						2>&1 >/dev/tty)
+selection=$?
 
-					clear
-					case $CHOICE in
-						#loop owned submenu until user exits.
-							1) #Add dish
-								dialog --title "Owned Fiestaware" --msgbox "Adding dish." 10 10 ; sleep 2
-									#add dish to owned Fiestaware
-									dialog --backtitle "Add dish to Owned Fiestaware dish list." \
-									--ok-label " Next " \
-									--radiolist "Select type of dish:" 12 40 4 \
-										1 "Plate" off \
-										2 "Ash Tray" off \
-										3 "Bowl" off \
-										4 "Mug" off
-										clear;;
-							2) #Remove dish
-								dialog --title "Owned Fiestaware" --msgbox "Removing dish." 10 10 ; sleep 2
-								clear;;
-							3) #Exit menu
-								dialog --title "Owned Fiestaware" --msgbox "Exiting Owned Fiestaware now." 10 60 ; sleep 2
-							esac;;
-				5) #Wanted dishes options.			
-				 	HEIGHT=15
-					WIDTH=60
-					CHOICE_HEIGHT=8
-					BACKTITLE="Vintage Fiestaware"
-					TITLE="Wanted Fiestaware Dishes"
-					MENU="Choose what to do with Wanted Fiestaware Dishes:"
-					OPTIONS=(1 "Add dish to wanted Fiestaware list."
-							2 "Remove dish from wanted Fiestaware list."
-							3 "Exit this menu.")
-							
-						CHOICE=$(dialog --clear \
-						--backtitle "$BACKTITLE" \
-						--title "$TITLE" \
-						--menu "$MENU" \
-						$HEIGHT $WIDTH $CHOICE_HEIGHT \
-						"${OPTIONS[@]}" \
-						2>&1 >/dev/tty)
-
-					clear
-					case $CHOICE in
-						#loop wanted submenu until user exits.
-							1) #Add dish
-								dialog --title "Wanted Fiestaware" --msgbox "Adding dish." 10 20 ; sleep 2
-									#add dish to wanted Fiestaware
-									dialog --backtitle "Add dish to Wanted Fiestaware dish list." \
-									--ok-label " Next " \
-									--radiolist "Select type of dish:" 12 40 4 \
-										1 "Plate" off \
-										2 "Ash Tray" off \
-										3 "Bowl" off \
-										4 "Mug" off
-										clear;;
-							2) #Remove dish
-								dialog --title "Wanted Fiestaware" --msgbox "Removing dish." 10 40 ; sleep 2
-								readFileWantFiesta;;
-							3) #Exit menu
-								dialog --title "Wanted Fiestaware" --msgbox "Exiting Wanted Fiestaware now." 10 60 ; sleep 2
-							esac;;
-
-				6)  #exits from menu
-					dialog --title "Exit Dish Collection Tracker" --msgbox "Exiting Fiestaware menu now." 10 60
-				esac;;
+	#if cancel button selected, exit program.
+	if [[ $selection -eq 1 ]]; then
+	    yad --text "Exit Dish Collection Tracker?" --button=gtk-quit:1 --button=gtk-cancel:0
+		exitSelection=$?
+		if [[ $exitSelection == 1 ]]
+			then
+				exit 0;
+		fi
+	
+	#menu for Fiestaware
+	elif [[ $selection -eq 2 ]]; then
+		yad --width=350 --text="Select what to do in Fiestaware menu:" \
+			--button=gtk-quit:1 \
+			--button="See all dishes":2 \
+			--button="See owned dishes":3 \
+			--button="See wanted dishes":4 \
+			--button="Edit owned dishes":5 \
+			--button="Edit wanted dishes":6 \
+			--button="Search for a piece":7 \
+		
+		OPTIONS=$?
+		
+		#Exit menu
+		if [[ $OPTIONS -eq 1 ]]; then
+			yad --text "Exit Fiestaware menu?" --button=gtk-quit:1 --button=gtk-cancel:0
+			exitSelection=$?
+			if [[ $exitSelection == 1 ]]
+				then
+					exit 0
+			fi
+	
+		#See all Fiestaware dishes made.
+		elif [[ $OPTIONS -eq 2 ]]; then
+		checkFileFiesta
+	
+		#See owned Fiestaware dishes.
+		elif [[ $OPTIONS -eq 3 ]]; then
+		checkOwnedFiesta
 				
-    2 )#primary menu for Pyrex
-		HEIGHT=15
-		WIDTH=60
-		CHOICE_HEIGHT=8
-		BACKTITLE="Dish Collection Tracker"
-		TITLE="Vintage Milkglass Pyrex Dishes"
-		MENU="Choose from the following options:"
-
-		OPTIONS=(1 "See all vintage milkglass Pyrex dishes made."
-				 2 "See all Pyrex dishes you own."
-				 3 "See all Pyrex dishes you want."
-				 4 "Add Pyrex dishes you own."
-				 5 "Add Pyrex dishes you want."
-				 6 "Exit.")
-
-		CHOICE=$(dialog --clear \
-						--backtitle "$BACKTITLE" \
-						--title "$TITLE" \
-						--menu "$MENU" \
-						$HEIGHT $WIDTH $CHOICE_HEIGHT \
-						"${OPTIONS[@]}" \
-						2>&1 >/dev/tty)
-
-		clear
-		case $CHOICE in
-			#loop brand submenu until user exits.
-				1) #See all Pyrex dishes.
-					dialog --infobox "You chose see all Pyrex dishes." 5 50 ; sleep 2
-					checkFilePyrex;;
-				2) #See owned dishes.
-					dialog --infobox "Here are your Pyrex dishes:" 5 50 ; sleep 2
-					checkOwnedPyrex;;
-				3) #See wanted dishes.
-					dialog --infobox "Here are the Pyrex dishes you want:" 5 50 ; sleep 2
-					checkWantedPyrex;;
-				4) #Add owned dishes.
-					echo "What type of Pyrex dish do you want to add to Owned Dishes?"
-					break;;
-				5) echo "What type of Pyrex dish do you want to add to Wanted Dishes?"
-					break;;
-				6) echo "Exiting now!"
-					break;;
-				   #Due to use of dialog menu, reduce invalid input
-				*) #invalid input causes menu to repeat
-					echo "Re-select what you want to do."
-					echo
-					break;;
-				esac;;
-
-    3 )#primary menu for Hazel Atlas
-		HEIGHT=15
-		WIDTH=60
-		CHOICE_HEIGHT=8
-		BACKTITLE="Dish Collection Tracker"
-		TITLE="Vintage Hazel Atlas Dishes"
-		MENU="Choose from the following options:"
-
-		OPTIONS=(1 "See all vintage Hazel Atlas dishes made."
-				 2 "See all Hazel Atlas dishes you own."
-				 3 "See all Hazel Atlas dishes you want."
-				 4 "Add Hazel Atlas dishes you own."
-				 5 "Add Hazel Atlas dishes you want."
-				 6 "Exit.")
-
-		CHOICE=$(dialog --clear \
-						--backtitle "$BACKTITLE" \
-						--title "$TITLE" \
-						--menu "$MENU" \
-						$HEIGHT $WIDTH $CHOICE_HEIGHT \
-						"${OPTIONS[@]}" \
-						2>&1 >/dev/tty)
-
-		clear
-		case $CHOICE in
-			#loop brand submenu until user exits.
-				1) #See all Hazel Atlas dishes.
-					dialog --infobox "You chose see all Hazel Atlas dishes." 5 50 ; sleep 2
-					checkFileHA;;
-				2) #See owned dishes.
-					dialog --infobox "Here are your Hazel Atlas dishes:" 5 50 ; sleep 2
-					checkOwnedHA;;
-				3) #See wanted dishes.
-					dialog --infobox "Here are the Hazel Atlas dishes you want:" 5 50 ; sleep 2
-					checkWantedHA;;
-				4) #Add owned dishes.
-					echo "What type of Hazel Atlas dish do you want to add to Owned Dishes?"
-					break;;
-				5) echo "What type of Hazel Atlas dish do you want to add to Wanted Dishes?"
-					break;;
-				6) echo "Exiting now!"
-					break;;
-				   #Due to use of dialog menu, reduce invalid input
-				*) #invalid input causes menu to repeat
-					echo "Re-select what you want to do."
-					echo
-					break;;
-				esac
-				esac
-			done
-		exit 0
+		#Wanted Fiestaware dishes options.
+		elif [[ $OPTIONS -eq 4 ]]; then
+		checkWantedFiesta
 			
+		#Owned  Fiestaware dishes options.	
+		if [[ $OPTIONS -eq 5 ]]; then
+			yad --text "Select what to do in owned Fiestaware menu:" \
+			--button="Add dish to owned Fiestaware list":1 --button="Remove dish from owned Fiestaware list":2 --button="Exit this menu":3
+			ownedPick=$?
+				#loop owned submenu until user exits.
+				if [[ $ownedPick -eq 1 ]]
+				then
+					#Add owned dishes.
+					#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+					yad --text "Select which dish or dishes you want to add to Owned Dishes." \ --button= --button=gtk-ok:1
+					readFileFiesta;
+					
+					#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+					#this still leaves desired text on odd lines
+					sed G fiestaDishes.txt >> tempSelection.txt
+					#have to add new line at beginning of file because only even numbered lines print
+					sed '1i\\' tempSelection.txt >> tempSelection2.txt
+					#remove last extra space in file, so no hanging radio button
+					head -n -1 tempSelection2.txt > tempHoldSelection;
+					#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+					CHOICE=$(yad --checklist --list --column="Fiestaware" --column="Click on item(s) to add to Owned Fiesta." --height=700 --width=700 < tempHoldSelection)
+					#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+					#for user readability, and removes last character which is a pipe (|)
+					echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedFiesta.txt
+					yad --text-info --height=700 --width=700 < ownedFiesta.txt \
+					--button= --button=-gtk-ok:1 --buttons-layout=center
+					#removes temporary files after append file
+					rm tempSelection.txt;
+					rm tempSelection2.txt;
+					rm tempHoldSelection;
+				
+				#Remove dish				
+				elif [[ $ownedPick -eq 2 ]]; then			
+					yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
+					readFileOwnFiesta;
+					
+					#allows one item to be selected by user with mouse. Can hit enter or "ok"
+					CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Fiesta." --height=700 --width=700 < ownedFiesta.txt)
+					#takes whatever line user selected and sends output to temp file
+					echo $CHOICE >> temp3
+					#removes | at end and sends to another temp file
+					sed s'/.$//' temp3 >> temp4
+					#a second variable is created with output from temp file to then delete from ownedFiesta.txt file
+					newCHOICE=$(<temp4)
+					sed -i "/$newCHOICE/d" ownedFiesta.txt
+					yad --text-info --height=700 --width=700 < ownedFiesta.txt \
+					--buttons-layout=center
+					#removes temp files
+					rm temp3;
+					rm temp4;
+									
+				#Exit menu
+				else
+					yad --text "Exiting Owned Fiestaware now." \ --button= --button="Go back":1
+				fi
+		fi
+		#Wanted dishes options.
+		if [[ $OPTIONS -eq 6 ]]; then
+
+			yad --text "Choose what to do with Wanted Fiestaware Dishes:" \
+			--button="Add dish to wanted Fiestaware list":1 --button="Remove dish from wanted Fiestaware list":2 --button="Exit this menu":3
+			
+			wantedPick=$?
+
+			#loop wanted submenu until user exits.
+			#Add wanted dishes.
+			if [[ $wantedPick -eq 1 ]]; then
+				#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+				yad --text "Select which dish or dishes you want to add to Wanted Dishes." \ --button= --button=gtk-ok:1
+				readFileFiesta;
+				
+				#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+				#this still leaves desired text on odd lines
+				sed G fiestaDishes.txt >> tempSelection.txt
+				#have to add new line at beginning of file because only even numbered lines print
+				sed '1i\\' tempSelection.txt >> tempSelection2.txt
+				#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+				CHOICE=$(yad --checklist --list --column="Fiestaware" --column="Click on item(s) to add to Wanted Fiesta." --height=700 --width=700 < tempSelection2.txt)
+				#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+				#for user readability, and removes last character which is a pipe (|)
+				echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> wantedFiesta.txt
+				yad --text-info --height=700 --width=700 < wantedFiesta.txt \
+				--button=gtk-yes:1 --buttons-layout=center
+				#removes tempSelection.txt file after append file
+				rm tempSelection.txt;
+				rm tempSelection2.txt;
+							
+			#Remove dish
+			elif [[ $wantedPick -eq 2 ]]; then
+				yad --text "Select a dish to remove from your wanted list." \ --button= --button=gtk-ok:1
+				readFileWantFiesta;
+
+				#allows one item to be selected by user with mouse. Can hit enter or "ok"
+				CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Fiesta." --height=700 --width=700 < wantedFiesta.txt)
+				#takes whatever line user selected and sends output to temp file
+				echo $CHOICE >> temp3
+				#removes | at end and sends to another temp file
+				sed s'/.$//' temp3 >> temp4
+				#a second variable is created with output from temp file to then delete from wantedFiesta.txt file
+				newCHOICE=$(<temp4)
+				sed -i "/$newCHOICE/d" wantedFiesta.txt
+				yad --text-info --height=700 --width=700 < wantedFiesta.txt \
+				--buttons-layout=center
+				#removes temp files
+				rm temp3;
+				rm temp4;
+									
+			#Exit menu
+			else
+				yad --text "Exiting Wanted Fiestaware now." \ --button= --button="Go back":1
+			fi
+		fi
+
+		#submenu allows user to select what to search in Fiestaware section
+		if [[ $OPTIONS -eq 7 ]]; then
+			
+				yad --text "Choose what list to search in Fiestaware Dishes:" \ --button= --button=gtk-ok:1
+				--button="Search all known vintage Fiesta":1 --button="Search Wanted Fiesta":2 --button="Search Owned Fiesta":3 --button="Exit this menu.":4
+				
+				#last executed command
+				searchPick=$?
+
+				#loop wanted submenu until user exits.
+				#Search all Fiestaware
+				if [[ $searchPick -eq 1 ]]; then
+					#checks file exists before grep
+					checkFileFiesta;
+					
+					search=$(\
+					yad --text "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." --entry \
+					--entry-text="Type keyword here")
+
+					#searches .txt for keyword entered
+					#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+					if grep -i $search fiestaDishes.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+
+					yad --text-info --height=700 --width=700 < tempOutputFile.txt
+						else
+					yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+					fi
+					
+					#removes tempOutputFile.txt file after used in dialog
+					rm tempOutputFile.txt;
+
+												
+				#Search Wanted Fiestaware
+				elif [[ $searchPick -eq 2 ]]; then
+					search=$(\
+					dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+					)
+					
+						#searches .txt for keyword entered
+						#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+						if grep -i $search wantedFiesta.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt
+						then
+							yad --text-info --height=700 --width=700 < tempOutputFile.txt
+						else
+							yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+						fi
+						
+						#removes tempOutputFile.txt file after used in dialog
+						rm tempOutputFile.txt
+						clear;
+							
+				#Search Owned Fiestaware
+				elif [[ $searchPick -eq 3 ]]; then
+					search=$(\
+					dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+					)
+						
+						#searches .txt for keyword entered
+						#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+						if grep -i $search ownedFiesta.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+							yad --text-info --height=700 --width=700 < tempOutputFile.txt
+						else
+							yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+						fi
+						
+						#removes tempOutputFile.txt file after used in dialog
+						rm tempOutputFile.txt;
+			
+				else
+				#exits from menu
+					yad --text "Exiting Fiestaware search menu now." \ --button= --button="Go back":1
+				fi
+			fi
+		fi
+	#menu for Pyrex	
+	elif [[ $selection -eq 3 ]]; then
+		#yad secondary menu for Pyrex using radiolist
+		sed G dishMenu.txt >> tempDishMenu.txt
+		#have to add new line at beginning of file because only even numbered lines print
+		sed '1i\\' tempDishMenu.txt >> tempDishMenu2.txt
+		#remove last extra space in file, so no hanging radio button
+		head -n -1 tempDishMenu2.txt > temp.txt;
+		
+		OPTIONS=$(yad --radiolist --list --height=300 --width=400 --column="Select" --column="Choose from the following options:" < temp.txt)
+		
+		#takes user choice and puts into temporary file
+		#removes TRUE and pipes (|) that occur due to radio button selection (ie:TRUE|Exit|)
+		echo "$OPTIONS" | sed s/TRUE// | sed -e 's/[||]//g' >> tempChoice
+		yad --text-info --height=700 --width=700 < tempChoice
+			
+		#See all Pyrex dishes made.
+		if [[ $OPTIONS = "See all dishes" ]]; then
+				checkFilePyrex
+				#removes temp files
+				removeTempFiles;
+		#See owned Pyrex dishes.
+		elif [[ $OPTIONS = "See dishes you own" ]]; then	
+				checkOwnedPyrex
+				#removes temp files
+				removeTempFiles;
+		#Wanted Pyrex dishes options.
+		elif [[ $OPTIONS = "See dishes you want" ]]; then
+				checkWantedPyrex
+				#removes temp files
+				removeTempFiles;
+		#Owned dishes options.	
+		elif [[ $OPTIONS = "Add or remove dishes you own" ]]; then
+		yad --text "Select what to do in owned Pyrex menu:" \
+		--button="Add dish to owned Pyrex list":1 --button="Remove dish from owned Pyrex list":2 --button="Exit this menu":3
+		pick=$?
+		#loop owned submenu until user exits.
+		if [[ $pick -eq 1 ]]; then
+			#Add owned dishes.
+			#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+			yad --text "Select which dish or dishes you want to add to Owned Dishes." \ --button= --button=gtk-ok:1
+			readFilePyrex;
+			
+			#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+			#this still leaves desired text on odd lines
+			sed G pyrexDishes.txt >> tempSelection.txt
+			#have to add new line at beginning of file because only even numbered lines print
+			sed '1i\\' tempSelection.txt >> tempSelection2.txt
+			#remove last extra space in file, so no hanging radio button
+			head -n -1 tempSelection2.txt > tempHoldSelection;
+			#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+			CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Owned Pyrex." --height=700 --width=700 < tempHoldSelection)
+			#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+			#for user readability, and removes last character which is a pipe (|)
+			echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedPyrex.txt
+			yad --text-info --height=700 --width=700 < ownedPyrex.txt \
+			--button= --button=-gtk-ok:1 --buttons-layout=center
+			#removes temporary files after append file
+			rm tempSelection.txt;
+			rm tempSelection2.txt;
+			rm tempHoldSelection;
+				
+			#Remove dish				
+			elif [[ $pick -eq 2 ]]; then			
+					yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
+					readFileOwnPyrex;
+					
+					#allows one item to be selected by user with mouse. Can hit enter or "ok"
+					CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < ownedFiesta.txt)
+					#takes whatever line user selected and sends output to temp file
+					echo $CHOICE >> temp3
+					#removes | at end and sends to another temp file
+					sed s'/.$//' temp3 >> temp4
+					#a second variable is created with output from temp file to then delete from ownedPyrex.txt file
+					newCHOICE=$(<temp4)
+					sed -i "/$newCHOICE/d" ownedPyrex.txt
+					yad --text-info --height=700 --width=700 < ownedPyrex.txt \
+					--buttons-layout=center
+					#removes temp files
+					rm temp3;
+					rm temp4;
+									
+					#Exit menu
+				else
+					yad --text "Exiting Owned Pyrex now." \ --button= --button="Go back":1
+				fi
+				
+				#Wanted dishes options.
+				elif [[ $OPTIONS = "Add or remove dishes you want" ]]; then
+					yad --text "Choose what to do with Wanted Pyrex Dishes:" \
+					--button="Add dish to wanted Pyrex list":1 --button="Remove dish from wanted Pyrex list":2 --button="Exit this menu":3
+					ownedPick=$?
+
+					#loop wanted submenu until user exits.
+					#Add wanted dishes.
+					if [[ $ownedPick -eq 1 ]]; then
+							#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+							yad --text "Select which dish or dishes you want to add to Wanted Dishes." \ --button= --button=gtk-ok:1
+							readFilePyrex;
+							
+							#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+							#this still leaves desired text on odd lines
+							sed G pyrexDishes.txt >> tempSelection.txt
+							#have to add new line at beginning of file because only even numbered lines print
+							sed '1i\\' tempSelection.txt >> tempSelection2.txt
+							#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+							CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Wanted Pyrex." --height=700 --width=700 < tempSelection2.txt)
+							#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+							#for user readability, and removes last character which is a pipe (|)
+							echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> wantedPyrex.txt
+							yad --text-info --height=700 --width=700 < wantedPyrex.txt \
+							--button=gtk-yes:1 --buttons-layout=center
+							#removes tempSelection.txt file after append file
+							rm tempSelection.txt;
+							rm tempSelection2.txt;
+								
+					#Remove dish
+					elif [[ $ownedPick -eq 2 ]]; then
+							yad --text "Select a dish to remove from your wanted list." \ --button= --button=gtk-ok:1
+							readFileWantPyrex;
+
+							#allows one item to be selected by user with mouse. Can hit enter or "ok"
+							CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < wantedFiesta.txt)
+							#takes whatever line user selected and sends output to temp file
+							echo $CHOICE >> temp3
+							#removes | at end and sends to another temp file
+							sed s'/.$//' temp3 >> temp4
+							#a second variable is created with output from temp file to then delete from wantedPyrex.txt file
+							newCHOICE=$(<temp4)
+							sed -i "/$newCHOICE/d" wantedPyrex.txt
+							yad --text-info --height=700 --width=700 < wantedPyrex.txt \
+							--buttons-layout=center
+							#removes temp files
+							rm temp3;
+							rm temp4;
+									
+				#Exit menu
+				else
+					yad --text "Exiting Wanted Pyrex now." \ --button= --button="Go back":1
+				fi
+
+		#submenu allows user to select what to search in Pyrex section
+		elif [[ $OPTIONS = "Search for a piece" ]]; then
+				yad --text "Choose what list to search in Pyrex Dishes:" \ --button= --button=gtk-ok:1
+				--button="Search all known vintage Pyrex":1 --button="Search Wanted Pyrex":2 --button="Search Owned Pyrex":3 --button="Exit this menu.":4
+				
+				#last executed command
+				searchPick=$?
+
+				#loop wanted submenu until user exits.
+				#Search all Pyrex
+				if [[ $searchPick -eq 1 ]]; then
+					search=$(\
+					yad --text "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." --entry \
+					--entry-text="Type keyword here")
+					
+					#checks file exists before grep
+					checkFilePyrex;
+
+					#searches .txt for keyword entered
+					#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+					if grep -i $search pyrexDishes.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+
+					yad --text-info --height=700 --width=700 < tempOutputFile.txt
+						else
+					yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+					fi
+					
+					#removes tempOutputFile.txt file after used in dialog
+					rm tempOutputFile.txt
+					clear;
+					
+												
+				#Search Wanted Pyrex
+				elif [[ $searchPick -eq 2 ]]; then
+					search=$(\
+					dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+					)
+						#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+						if grep -i $search wantedPyrex.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+
+						yad --text-info --height=700 --width=700 < tempOutputFile.txt
+							else
+						yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+						fi
+						
+						#removes tempOutputFile.txt file after used in dialog
+						rm tempOutputFile.txt;
+				
+				#Search Owned Pyrex
+				elif [[ $searchPick -eq 3 ]]; then
+					search=$(\
+					dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+					)
+					#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+					if grep -i $search ownedPyrex.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+
+						yad --text-info --height=700 --width=700 < tempOutputFile.txt
+					else
+						yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+					fi
+					
+					#removes tempOutputFile.txt file after used in dialog
+					rm tempOutputFile.txt;
+							
+				else
+				#exits from menu
+					yad --text "Exiting Pyrex search menu now." \ --button= --button="Go back":1
+				fi
+					
+		#exits from Pyrex menu
+		else
+			yad --text "Exiting Pyrex menu now." \ --button= --button="Go back":1
+		fi
+		
+		#removes temp files
+		removeTempFiles;
+
+	#menu for Hazel Atlas	
+	else [[ $selection -eq 4 ]]
+	{
+		#yad secondary menu for Hazel Atlas using radiolist
+		sed G dishMenu.txt >> tempDishMenu.txt
+		#have to add new line at beginning of file because only even numbered lines print
+		sed '1i\\' tempDishMenu.txt >> tempDishMenu2.txt
+		#remove last extra space in file, so no hanging radio button
+		head -n -1 tempDishMenu2.txt > temp.txt;
+		
+		OPTIONS=$(yad --radiolist --list --height=300 --width=400 --column="Select" --column="Choose from the following options:" < temp.txt)
+		
+		#takes user choice and puts into temporary file
+		#removes TRUE and pipes (|) that occur due to radio button selection (ie:TRUE|Exit|)
+		echo "$OPTIONS" | sed s/TRUE// | sed -e 's/[||]//g' >> tempChoice
+		yad --text-info --height=700 --width=700 < tempChoice
+		
+			#See all Hazel Atlas dishes made.
+			if [[ $OPTIONS == "See all dishes" ]]; then
+				checkFileHA
+				#removes temp files
+				removeTempFiles;
+			#See owned Hazel Atlas dishes.
+			elif [[ $OPTIONS == "See dishes you own" ]]; then	
+				checkOwnedHA
+				#removes temp files
+				removeTempFiles;
+			#Wanted Hazel Atlas dishes options.
+			elif [[ $OPTIONS == "See dishes you want" ]]; then
+				checkWantedHA
+				#removes temp files
+					removeTempFiles;
+			#Owned dishes options.	
+			elif [[ $OPTIONS == "Add or remove dishes you own" ]]; then
+				yad --text "Select what to do in owned Hazel Atlas menu:" \
+				--button="Add dish to owned Hazel Atlas list":1 --button="Remove dish from owned Hazel Atlas list":2 --button="Exit this menu":3
+			
+				pick=$?
+					#loop owned submenu until user exits.
+					if [[ $pick -eq 1 ]]; then
+						#Add owned dishes.
+						#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+						yad --text "Select which dish or dishes you want to add to Owned Dishes." \ --button= --button=gtk-ok:1
+						readFileHA;
+						
+						#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+						#this still leaves desired text on odd lines
+						sed G pyrexDishes.txt >> tempSelection.txt
+						#have to add new line at beginning of file because only even numbered lines print
+						sed '1i\\' tempSelection.txt >> tempSelection2.txt
+						#remove last extra space in file, so no hanging radio button
+						head -n -1 tempSelection2.txt > tempHoldSelection;
+						#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+						CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Owned Hazel Atlas." --height=700 --width=700 < tempHoldSelection)
+						#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+						#for user readability, and removes last character which is a pipe (|)
+						echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedHA.txt
+						yad --text-info --height=700 --width=700 < ownedHA.txt \
+						--button= --button=-gtk-ok:1 --buttons-layout=center
+						#removes temporary files after append file
+						rm tempSelection.txt;
+						rm tempSelection2.txt;
+						rm tempHoldSelection;
+				
+					#Remove dish				
+					elif [[ $pick -eq 2 ]]; then			
+						yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
+						readFileOwnHA;
+						
+						#allows one item to be selected by user with mouse. Can hit enter or "ok"
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < ownedFiesta.txt)
+						#takes whatever line user selected and sends output to temp file
+						echo $CHOICE >> temp3
+						#removes | at end and sends to another temp file
+						sed s'/.$//' temp3 >> temp4
+						#a second variable is created with output from temp file to then delete from ownedPyrex.txt file
+						newCHOICE=$(<temp4)
+						sed -i "/$newCHOICE/d" ownedHA.txt
+						yad --text-info --height=700 --width=700 < ownedHA.txt \
+						--buttons-layout=center
+						#removes temp files
+						rm temp3;
+						rm temp4;
+											
+					#Exit menu
+					else
+						yad --text "Exiting Owned Hazel Atlas now." \ --button= --button="Go back":1
+					fi
+			#Wanted dishes options.
+			elif [[ $OPTIONS == "Add or remove dishes you want" ]]; then
+				yad --text "Choose what to do with Wanted Hazel Atlas Dishes:" \
+				--button="Add dish to wanted Hazel Atlas list":1 --button="Remove dish from wanted Hazel Atlas list":2 --button="Exit this menu":3
+				
+				ownedPick=$?
+
+				#loop wanted submenu until user exits.
+				#Add wanted dishes.
+				if [[ $ownedPick -eq 1 ]]; then
+					#Allows user to select dish or dishes from master all dishes list. #Increases uniformity and consistency in data file.
+					yad --text "Select which dish or dishes you want to add to Wanted Dishes." \ --button= --button=gtk-ok:1
+					readFileHA;
+					
+					#sed G adds space between lines as place holder for FALSE which yad --checklist looks for because of two columns
+					#this still leaves desired text on odd lines
+					sed G pyrexDishes.txt >> tempSelection.txt
+					#have to add new line at beginning of file because only even numbered lines print
+					sed '1i\\' tempSelection.txt >> tempSelection2.txt
+					#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
+					CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Wanted Hazel Atlas." --height=700 --width=700 < tempSelection2.txt)
+					#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
+					#for user readability, and removes last character which is a pipe (|)
+					echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> wantedHA.txt
+					yad --text-info --height=700 --width=700 < wantedHA.txt \
+					--button=gtk-yes:1 --buttons-layout=center
+					#removes tempSelection.txt file after append file
+					rm tempSelection.txt;
+					rm tempSelection2.txt;
+						
+				#Remove dish
+				elif [[ $ownedPick -eq 2 ]]; then
+					yad --text "Select a dish to remove from your wanted list." \ --button= --button=gtk-ok:1
+					readFileWantHA;
+
+					#allows one item to be selected by user with mouse. Can hit enter or "ok"
+					CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < wantedFiesta.txt)
+					#takes whatever line user selected and sends output to temp file
+					echo $CHOICE >> temp3
+					#removes | at end and sends to another temp file
+					sed s'/.$//' temp3 >> temp4
+					#a second variable is created with output from temp file to then delete from wantedHA.txt file
+					newCHOICE=$(<temp4)
+					sed -i "/$newCHOICE/d" wantedHA.txt
+					yad --text-info --height=700 --width=700 < wantedHA.txt \
+					--buttons-layout=center
+					#removes temp files
+					rm temp3;
+					rm temp4;
+							
+				#Exit menu
+				else
+					yad --text "Exiting Wanted Hazel Atlas now." \ --button= --button="Go back":1
+				fi
+
+			#submenu allows user to select what to search in Hazel Atlas section
+			elif [[ $OPTIONS = "Search for a piece" ]]; then
+					yad --text "Choose what list to search in Hazel Atlas Dishes:" \ --button= --button=gtk-ok:1
+					--button="Search all known vintage Hazel Atlas":1 --button="Search Wanted Hazel Atlas":2 --button="Search Owned Hazel Atlas":3 --button="Exit this menu.":4
+					
+					#last executed command
+					searchPick=$?
+
+					#loop wanted submenu until user exits.
+					#Search all Pyrex
+					if [[ $searchPick -eq 1 ]]; then
+						search=$(\
+						yad --text "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." --entry \
+						--entry-text="Type keyword here")
+						
+						#checks file exists before grep
+						checkFileHA;
+
+						#searches .txt for keyword entered
+						#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+						if grep -i $search haDishes.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+							yad --text-info --height=700 --width=700 < tempOutputFile.txt
+						else
+							yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+						fi
+						
+						#removes tempOutputFile.txt file after used in dialog
+						rm tempOutputFile.txt;
+													
+					#Search Wanted Hazel Atlas
+					elif [[ $searchPick -eq 2 ]]; then
+						search=$(\
+						dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+						)
+						
+							#searches .txt for keyword entered
+							#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+							if grep -i $search wantedHA.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+								yad --text-info --height=700 --width=700 < tempOutputFile.txt
+							else
+								yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+							fi
+							
+							#removes tempOutputFile.txt file after used in dialog
+							rm tempOutputFile.txt;
+							
+					#Search Owned Hazel Atlas
+					elif [[ $searchPick -eq 3 ]]; then
+						search=$(\
+						dialog --inputbox "Enter a keyword, such as dish type or color. If no results are returned, try using less words or fewer characters." 8 60 \
+						)
+							#searches .txt for keyword entered
+							#if exists, displays results in testbox, otherwise, displays infobox message if no matches
+							if grep -i $search ownedHA.txt | sed 's/^[^;]*;//g' | sed 's/; */; /g' > tempOutputFile.txt; then
+								yad --text-info --height=700 --width=700 < tempOutputFile.txt
+							else
+								yad --text "No results. Try fewer words or another keyword." \ --button= --button="Go back":1
+							fi
+							
+							#removes tempOutputFile.txt file after used in dialog
+							rm tempOutputFile.txt;
+							
+					else
+					#exits from menu
+						yad --text "Exiting Hazel Atlas search menu now." \ --button= --button="Go back":1
+					fi
+			#exits from Hazel Atlas menu
+			else
+				yad --text "Exiting Hazel Atlas menu now." \ --button= --button="Go back":1
+            fi
+	}
+fi
+done;
