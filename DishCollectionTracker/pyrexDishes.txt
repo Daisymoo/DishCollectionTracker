@@ -1,0 +1,30 @@
+                                 All PYREX milkglass dishes
+
+1;Pyrex;mixing bowls;primary colors (yellow, green, red, blue);1945-1949;
+2;Pyrex;refrigerator dishes;primary colors (yellow, green, red, blue);1945-1949;
+3;Pyrex;divided dish;pink daisy (aka white daisy) [pink dish with white daisies];1956-1962;
+4;Pyrex;covered casserole (1.5 qt, number 043);pink daisy (aka white daisy) [pink dish with white daisies];1956-1962;
+5;Pyrex;covered caseerole (2.5 qt, number 045);pink daisy (aka white daisy) [pink dish with white daisies];1956-1962;
+6;Pyrex;divided dish;snowflake (turquoise dish with white snowflakes);1956-1967;
+7;Pyrex;covered casserole (1.5 qt, number 043);snowflake (turquoise dish with white snowflakes);1956-1967;
+8;Pyrex;covered caseerole (2.5 qt, number 045);snowflake (turquoise dish with white snowflakes);1956-1967;
+9;Pyrex;divided dish;snowflake (white dish with turquoise snowflakes);1956-1963;
+10;Pyrex;covered casserole (1.5 qt, number 043);snowflake (white dish with turquoise snowflakes);1956-1963;
+11;Pyrex;covered caseerole (2.5 qt, number 045);snowflake (white dish with turquoise snowflakes);1956-1963;
+12;Pyrex;divided dish;snowflake (black dish with white snowflakes);1956-1960;
+13;Pyrex;covered casserole (1.5 qt, number 043);snowflake (black dish with white snowflakes);1956-1960;
+14;Pyrex;covered caseerole (2.5 qt, number 045);snowflake (black dish with white snowflakes);1956-1960;
+15;Pyrex;cinderella mixing bowls;butterprint (aka amish) [alternating turquoise dish with white print and white dish with turquoise print];1957-1968;
+16;Pyrex;cinderella mixing bowls;butterprint (aka amish) [white dish with yellow print];1957-1968;
+17;Pyrex;cinderella mixing bowls;butterprint (aka amish) [white dish with pink print];1957-1968;
+18;Pyrex;refrigerator dishes;butterprint (aka amish) [white dishes with turquoise print];1957-1968;
+19;Pyrex;open shallow bowl;terra;1964-1965;
+20;Pyrex;covered casserole (1 pt);terra;1964-1965;
+21;Pyrex;covered casserole (1.5 qt);terra;1964-1965;
+22;Pyrex;covered casserole (2.5 qt);terra;1964-1965;
+23;Pyrex;mixing bowls (open bowls 1.5 pt);terra;1964-1965;
+24;Pyrex;mixing bowls (open bowls 2.5 qt);terra;1964-1965;
+25;Pyrex;mixing bowls (open bowls 4 qt);terra;1964-1965;
+26;Pyrex;mugs (12 oz);terra;1964-1965;
+27;Pyrex;plate (9 in);terra;1964-1965;
+28;Pyrex;plate (12 in);terra;1964-1965;
