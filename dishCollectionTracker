@@ -284,7 +284,7 @@ case $action in
 						yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
 						
 						#allows one item to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Fiesta." --height=700 --width=700 < ownedFiesta.txt --button=gtk-ok:1)
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Fiesta." --height=700 --width=700 < ownedFiesta.txt)
 						#takes whatever line user selected and sends output to temp file
 						echo $CHOICE >> temp3
 						#removes | at end and sends to another temp file
@@ -524,7 +524,7 @@ case $action in
 					sed '1i\\' tempSelection.txt >> tempSelection2.txt
 					#remove last extra space in file, so no hanging radio button
 					head -n -1 tempSelection2.txt > tempHoldSelection;
-					imageSelection=$(yad --radiolist --list --column="Fiestaware" --column="Click on Fiestaware image to view." --height=700 --width=700 < tempHoldSelection --button=gtk-ok:1)
+					imageSelection=$(yad --radiolist --list --column="Fiestaware" --column="Click on Fiestaware image to view." --height=700 --width=700 < tempHoldSelection)
 						
 					echo "$imageSelection" >> tempImageSelection;
 			
@@ -557,8 +557,6 @@ case $action in
 					}
 				}
 			fi
-		#return to Fiesta menu
-		fiestaMenu
 		;;
 		
 		Exit*)
@@ -630,7 +628,7 @@ case $action in
 						#remove last extra space in file, so no hanging radio button
 						head -n -1 tempSelection2.txt > tempHoldSelection;
 						#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Owned Pyrex." --height=700 --width=700 < tempHoldSelection --button=gtk-ok:1)
+						CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Owned Pyrex." --height=700 --width=700 < tempHoldSelection)
 						#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 						#for user readability, and removes last character which is a pipe (|)
 						echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedPyrex.txt
@@ -647,7 +645,7 @@ case $action in
 						yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
 						
 						#allows one item to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < ownedPyrex.txt --button=gtk-ok:1)
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < ownedPyrex.txt)
 						#takes whatever line user selected and sends output to temp file
 						echo $CHOICE >> temp3
 						#removes | at end and sends to another temp file
@@ -705,7 +703,7 @@ case $action in
 					#have to add new line at beginning of file because only even numbered lines print
 					sed '1i\\' tempSelection.txt >> tempSelection2.txt
 					#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
-					CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Wanted Pyrex." --height=700 --width=700 < tempSelection2.txt  --button=gtk-ok:1)
+					CHOICE=$(yad --checklist --list --column="Pyrex" --column="Click on item(s) to add to Wanted Pyrex." --height=700 --width=700 < tempSelection2.txt)
 					#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 					#for user readability, and removes last character which is a pipe (|)
 					echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> wantedPyrex.txt
@@ -721,7 +719,7 @@ case $action in
 						yad --text "Select a dish to remove from your wanted list." \ --button= --button=gtk-ok:1
 
 						#allows one item to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < wantedPyrex.txt --button=gtk-ok:1)
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Pyrex." --height=700 --width=700 < wantedPyrex.txt)
 						#takes whatever line user selected and sends output to temp file
 						echo $CHOICE >> temp3
 						#removes | at end and sends to another temp file
@@ -885,7 +883,7 @@ case $action in
 				sed '1i\\' tempSelection.txt >> tempSelection2.txt
 				#remove last extra space in file, so no hanging radio button
 				head -n -1 tempSelection2.txt > tempHoldSelection;
-				imageSelection=$(yad --radiolist --list --column="Pyrex" --column="Click on Pyrex image to view." --height=700 --width=700 < tempHoldSelection --button=gtk-ok:1)
+				imageSelection=$(yad --radiolist --list --column="Pyrex" --column="Click on Pyrex image to view." --height=700 --width=700 < tempHoldSelection)
 					
 				echo "$imageSelection" >> tempImageSelection;
 		
@@ -903,9 +901,15 @@ case $action in
 						yad --text="Primary colors of yellow, green, red, and blue are a popular mixing bowl set.\nPrimary color sets of other Pyrex dishes can be found." --image /home/just_tri/Images/Pyrex/Primary_Mixing_Bowls.jpeg
 					}
 					
-					else grep -q "TRUE|Covered Onion Soup Bowls|" tempImageSelection
+					elif grep -q "TRUE|Snowflake Various Pieces|" tempImageSelection
+					then
 					{
 						yad --text="Snowflake pattern is typically white printed on white, turquoise, or black.\nThe reverse combinations can also be found.\nMore rarely, one can find white snowflakes on a pink background." --image /home/just_tri/Images/Pyrex/Snowflake_Various_Pieces.jpg
+					}
+
+					else grep -q "TRUE|Terra 1964-1964 Marking Ad|" tempImageSelection
+					{
+						yad --text="The Terra pattern is a matte finish with brown rings.\nThis pattern was only made from 1964-1965 due to high production costs\nand the fact the finish was easily scratched." --image /home/just_tri/Images/Pyrex/Terra.jpg
 					}
 					fi
 					
@@ -917,9 +921,7 @@ case $action in
 					clear;
 				}
 			}
-		fi
-		#call Pyrex menu
-		pyrexMenu		
+		fi	
 		;;
 
 		Exit*)
@@ -992,7 +994,7 @@ case $action in
 						#remove last extra space in file, so no hanging radio button
 						head -n -1 tempSelection2.txt > tempHoldSelection;
 						#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Owned Hazel Atlas." --height=700 --width=700 < tempHoldSelection --button=gtk-ok:1)
+						CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Owned Hazel Atlas." --height=700 --width=700 < tempHoldSelection)
 						#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 						#for user readability, and removes last character which is a pipe (|)
 						echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedHA.txt
@@ -1009,7 +1011,7 @@ case $action in
 						yad --text "Select a dish to remove from your owned list." \ --button= --button=gtk-ok:1
 						
 						#allows one item to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < ownedHA.txt --button=gtk-ok:1)
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < ownedHA.txt)
 						#takes whatever line user selected and sends output to temp file
 						echo $CHOICE >> temp3
 						#removes | at end and sends to another temp file
@@ -1068,7 +1070,7 @@ case $action in
 					#have to add new line at beginning of file because only even numbered lines print
 					sed '1i\\' tempSelection.txt >> tempSelection2.txt
 					#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
-					CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Wanted Hazel Atlas." --height=700 --width=700 < tempSelection2.txt --button=gtk-ok:1)
+					CHOICE=$(yad --checklist --list --column="Hazel Atlas" --column="Click on item(s) to add to Wanted Hazel Atlas." --height=700 --width=700 < tempSelection2.txt)
 					#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 					#for user readability, and removes last character which is a pipe (|)
 					echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> wantedHA.txt
@@ -1084,7 +1086,7 @@ case $action in
 						yad --text "Select a dish to remove from your wanted list." \ --button= --button=gtk-ok:1
 
 						#allows one item to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < wantedHA.txt --button=gtk-ok:1)
+						CHOICE=$(yad --list --multiple --column="Click on item(s) to delete from Wanted Hazel Atlas." --height=700 --width=700 < wantedHA.txt)
 						#takes whatever line user selected and sends output to temp file
 						echo $CHOICE >> temp3
 						#removes | at end and sends to another temp file
