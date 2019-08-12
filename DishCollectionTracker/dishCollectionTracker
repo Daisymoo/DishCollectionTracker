@@ -268,7 +268,7 @@ case $action in
 						#remove last extra space in file, so no hanging radio button
 						head -n -1 tempSelection2.txt > tempHoldSelection;
 						#allows one or more items to be selected by user with mouse. Can hit enter or "ok"
-						CHOICE=$(yad --checklist --list --column="Fiestaware" --column="Click on item(s) to add to Owned Fiesta." --height=700 --width=700 < tempHoldSelection --button=gtk-ok:1)
+						CHOICE=$(yad --checklist --list --column="Fiestaware" --column="Click on item(s) to add to Owned Fiesta." --height=700 --width=700 < tempHoldSelection)
 						#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 						#for user readability, and removes last character which is a pipe (|)
 						echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedFiesta.txt
@@ -632,8 +632,7 @@ case $action in
 						#takes whatever line user selected, removes number from front of list, addes spaces after semicolun
 						#for user readability, and removes last character which is a pipe (|)
 						echo "$CHOICE" | sed 's/^[^;]*;//g' | sed 's/; */; /g' | sed s'/.$//' >> ownedPyrex.txt
-						yad --text-info --height=700 --width=700 < ownedPyrex.txt \
-						--button= --button=gtk-ok:1 --buttons-layout=center
+						yad --text-info --height=700 --width=700 < ownedPyrex.txt --button=gtk-ok:1
 						#removes temporary files after append file
 						rm tempSelection.txt;
 						rm tempSelection2.txt;
@@ -661,7 +660,7 @@ case $action in
 						#Exit menu
 					else
 						yad --text "Exiting Owned Pyrex now." \ --button= --button=gtk-ok:1
-						break;
+						break
 					fi
 			}
 			fi
